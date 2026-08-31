@@ -111,20 +111,6 @@ This limit is best-effort: the active-user lookup and authorization request are 
 
 Client-safe errors include `INVALID_ROOM_ID`, `INVALID_NAME`, `NAME_REQUIRED`, `ROOM_NOT_FOUND`, `ROOM_FULL`, and `SERVER_CONFIG_ERROR`.
 
-## Deployment
-
-### Vercel
-
-1. Import the repository into Vercel.
-2. Add `LIVEBLOCKS_SECRET_KEY` to the project environment variables.
-3. Deploy using the default Next.js settings.
-
-No always-running Node server or custom WebSocket server is required. Liveblocks provides the realtime infrastructure.
-
-### Netlify
-
-Deploy as a Next.js application using Netlify’s Next.js runtime and configure `LIVEBLOCKS_SECRET_KEY` as a server environment variable. Confirm the runtime supports Next.js 16 App Router route handlers and preserves httpOnly cookies on serverless responses. Realtime connections are handled by Liveblocks, not Netlify.
-
 ## Verification
 
 Run the automated checks:
