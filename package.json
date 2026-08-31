@@ -9,6 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@liveblocks/client": "^3.24.1",
+    "@liveblocks/node": "^3.24.1",
+    "@liveblocks/react": "^3.24.1",
+    "@liveblocks/react-tiptap": "^3.24.1",
+    "@liveblocks/react-ui": "^3.24.1",
+    "@tiptap/extension-placeholder": "^3.30.5",
+    "@tiptap/react": "^3.30.5",
+    "@tiptap/starter-kit": "^3.30.5",
+    "nanoid": "^6.0.1",
     "next": "16.3.3",
     "react": "19.2.8",
     "react-dom": "19.2.8"
