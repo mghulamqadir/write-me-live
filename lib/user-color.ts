@@ -1,12 +1,12 @@
-import { isDarkTheme, type ThemeName } from "@/lib/theme";
+import type { ThemeName } from "@/lib/theme";
 
 const CURSOR_COLORS = {
-  light: ["rgb(5 150 105)", "rgb(2 132 199)"],
-  dark: ["rgb(16 185 129)", "rgb(56 189 248)"],
+  dark: ["rgb(95 191 170)", "rgb(224 134 89)"],
+  "soft-dark": ["rgb(95 191 170)", "rgb(224 134 89)"],
 } as const;
 
 export function getUserColor(userId: string, theme: ThemeName, usedColors: ReadonlySet<string> = new Set()): string {
-  const colors = CURSOR_COLORS[isDarkTheme(theme) ? "dark" : "light"];
+  const colors = CURSOR_COLORS[theme];
   let hash = 0;
   for (const character of userId) hash = (hash * 31 + character.charCodeAt(0)) >>> 0;
   const preferredIndex = hash % colors.length;

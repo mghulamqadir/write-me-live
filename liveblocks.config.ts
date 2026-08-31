@@ -19,7 +19,7 @@ export const liveblocksClient = createClient({
     const theme = document.documentElement.dataset.theme;
     const response = await fetch("/api/liveblocks-auth", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "x-wml-theme": isThemeName(theme) ? theme : "light" },
+      headers: { "Content-Type": "application/json", "x-wml-theme": isThemeName(theme) ? theme : "dark" },
       body: JSON.stringify({ room }),
     });
     return response.json();

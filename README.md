@@ -9,7 +9,7 @@ Write Me Live is a minimal, anonymous, two-person collaborative writing room. Cr
 - Liveblocks for room authentication, presence, realtime transport, and persistence
 - Tiptap with the Liveblocks Yjs collaboration extension
 - `nanoid` for anonymous browser IDs and room IDs
-- Four editorial themes: Light, Dark, Soft dark, and Sepia
+- Two editorial themes: Dark and Soft dark
 
 ## Local setup
 
@@ -30,7 +30,7 @@ Tiptap uses the official Liveblocks Yjs extension, so the collaborative document
 
 Connected participants appear as compact, individually colored name badges with initials. Colors are assigned from the anonymous participant ID and reused across refreshes and name changes. The current participant’s badge can be selected to change their display name; changing the name reconnects the participant without resetting the shared document.
 
-The theme selector in the homepage and room header switches between Light, Dark, Soft dark, and Sepia without a reload. The choice is stored separately from identity in `localStorage` and a `wml_theme` preference cookie. An inline initialization script applies the saved theme before first paint to avoid a flash of the wrong theme. The writing area uses a serif editorial typeface while application controls use sans-serif text.
+The theme selector in the homepage and room header switches between Dark and Soft dark without a reload. The choice is stored separately from identity in `localStorage` and a `wml_theme` preference cookie. An inline initialization script applies the saved theme before first paint to avoid a flash of the wrong theme. The writing area uses a serif editorial typeface while application controls use sans-serif text.
 
 ## Two-user limit
 

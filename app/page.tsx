@@ -57,7 +57,7 @@ export default function Home() {
           </div>
           <div>
             <div className="flex items-center gap-1.5 leading-none">
-              <span className="font-bold tracking-tight text-emerald-400 text-base">WriteMe</span>
+              <span className="font-bold tracking-tight text-emerald-400 text-base">Write Me</span>
               <span className="font-bold tracking-tight text-[var(--text-primary)] text-base">Live</span>
             </div>
             <p className="text-[10px] font-semibold tracking-widest text-[var(--text-muted)] mt-0.5">COLLABORATIVE WORKSPACE</p>
@@ -78,7 +78,7 @@ export default function Home() {
         {/* Center Hero Heading */}
         <div className="text-center mb-8">
           <h1 className="hero-heading flex items-center justify-center gap-2.5">
-            <span className="brand-gradient">WriteMe</span>
+            <span className="brand-gradient">Write Me</span>
             <span className="text-[var(--text-primary)]">Live</span>
           </h1>
           <p className="theme-subtitle mx-auto mt-3 max-w-lg text-sm sm:text-base font-normal">
@@ -214,7 +214,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="relative z-10 mx-auto text-center text-xs text-[var(--text-muted)] py-2">
-        WriteMe Live · Peer-to-peer collaborative writing workspace
+        Write Me Live · Peer-to-peer collaborative writing workspace
       </footer>
     </main>
   );

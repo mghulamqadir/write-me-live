@@ -1,4 +1,4 @@
-export const THEMES = ["dark", "soft-dark", "light", "sepia"] as const;
+export const THEMES = ["dark", "soft-dark"] as const;
 export type ThemeName = (typeof THEMES)[number];
 
 export function isThemeName(value: string | null | undefined): value is ThemeName {

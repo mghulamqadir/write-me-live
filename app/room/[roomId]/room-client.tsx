@@ -39,7 +39,7 @@ function RoomContents({ roomId }: { roomId: string }) {
           </div>
           <div>
             <div className="flex items-center gap-1.5 leading-none">
-              <span className="font-bold tracking-tight text-emerald-400 text-base">WriteMe</span>
+              <span className="font-bold tracking-tight text-emerald-400 text-base">Write Me</span>
               <span className="font-bold tracking-tight text-[var(--text-primary)] text-base">Live</span>
             </div>
             <p className="text-[10px] font-semibold tracking-widest text-[var(--text-muted)] mt-0.5">COLLABORATIVE WORKSPACE</p>
@@ -58,7 +58,7 @@ function RoomContents({ roomId }: { roomId: string }) {
         {/* Center Hero Heading */}
         <div className="text-center mb-6">
           <h1 className="hero-heading flex items-center justify-center gap-2.5">
-            <span className="brand-gradient">WriteMe</span>
+            <span className="brand-gradient">Write Me</span>
             <span className="text-[var(--text-primary)]">Live</span>
           </h1>
           <p className="theme-subtitle mx-auto mt-2 max-w-md text-xs sm:text-sm font-normal">
@@ -99,7 +99,7 @@ function RoomContents({ roomId }: { roomId: string }) {
 
       {/* Footer */}
       <footer className="relative z-10 mx-auto text-center text-xs text-[var(--text-muted)] py-2">
-        WriteMe Live · Peer-to-peer collaborative writing workspace
+        Write Me Live · Peer-to-peer collaborative writing workspace
       </footer>
     </main>
   );

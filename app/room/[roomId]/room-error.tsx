@@ -14,7 +14,7 @@ const messages: Record<string, { title: string; subtitle: string }> = {
   },
   ROOM_FULL: {
     title: "Session Full",
-    subtitle: "WriteMe Live rooms support up to 2 active participants simultaneously.",
+    subtitle: "Write Me Live rooms support up to 2 active participants simultaneously.",
   },
   SERVER_CONFIG_ERROR: {
     title: "Configuration Error",
