@@ -9,6 +9,7 @@ Write Me Live is a minimal, anonymous, two-person collaborative writing room. Cr
 - Liveblocks for room authentication, presence, realtime transport, and persistence
 - Tiptap with the Liveblocks Yjs collaboration extension
 - `nanoid` for anonymous browser IDs and room IDs
+- Four editorial themes: Light, Dark, Soft dark, and Sepia
 
 ## Local setup
 
@@ -23,9 +24,13 @@ Set `LIVEBLOCKS_SECRET_KEY` in `.env.local` using a secret key from the Livebloc
 
 The homepage calls `POST /api/rooms`. The server generates an unguessable room ID and creates the Liveblocks room with no default access. The browser is redirected to `/room/[roomId]`.
 
-The room page mounts a Liveblocks `RoomProvider`. When Liveblocks requests an access token, `POST /api/liveblocks-auth` reads the httpOnly `wml_anon_id` cookie, validates the room, checks occupancy, and returns a scoped full-access token. The secret key is only read by server code.
+The homepage or a direct room link first asks for a display name. `POST /api/identity` stores the validated name in the httpOnly `wml_display_name` cookie. The room page only mounts Liveblocks after that step. When Liveblocks requests an access token, `POST /api/liveblocks-auth` reads both the display-name and anonymous-ID cookies, validates the room, checks occupancy, publishes the name as Liveblocks user metadata, and returns a scoped full-access token. The secret key is only read by server code.
 
 Tiptap uses the official Liveblocks Yjs extension, so the collaborative document is owned by the realtime provider rather than mirrored into React state. Liveblocks also supplies the connected-user list and room connection status.
+
+Connected participants appear as compact, individually colored name badges with initials. Colors are assigned from the anonymous participant ID and reused across refreshes and name changes. The current participant’s badge can be selected to change their display name; changing the name reconnects the participant without resetting the shared document.
+
+The theme selector in the homepage and room header switches between Light, Dark, Soft dark, and Sepia without a reload. The choice is stored separately from identity in `localStorage` and a `wml_theme` preference cookie. An inline initialization script applies the saved theme before first paint to avoid a flash of the wrong theme. The writing area uses a serif editorial typeface while application controls use sans-serif text.
 
 ## Two-user limit
 
@@ -55,11 +60,3 @@ npm run build
 ```
 
 Manually create a room, open it in two browsers, test two-way typing, simultaneous edits, deletion, plain-text paste, undo/redo, refresh reconvergence, presence, reconnects, copy-link behavior, invalid/nonexistent rooms, and the third-user full-room state. Test desktop and mobile viewports.
-
-## Known V1 limitations
-
-- No user accounts or durable application database
-- Anonymous identity is for occupancy tracking, not security-critical authentication
-- Occupancy enforcement is best-effort and has a small race window
-- No rate-limiting infrastructure
-- No custom realtime server; Liveblocks is required for collaboration
