@@ -135,12 +135,3 @@ npm run build
 ```
 
 Manual verification should cover room creation, named joining, two-way typing, simultaneous editing, deletion, plain-text paste, undo/redo, refresh reconvergence, presence updates, reconnects, third-user rejection, copy-link behavior, invalid/nonexistent rooms, both themes, and desktop/mobile layouts.
-
-## Known V1 limitations
-
-- No accounts or application database
-- Anonymous IDs and display names are not security-critical authentication
-- Two-user enforcement is best-effort and has a race window
-- No rate-limiting infrastructure
-- No custom WebSocket server
-- Clipboard support depends on browser permissions and secure-context rules
