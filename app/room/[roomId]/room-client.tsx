@@ -14,17 +14,6 @@ import RoomError from "./room-error";
 import Link from "next/link";
 
 function RoomContents({ roomId }: { roomId: string }) {
-  const [errorCode, setErrorCode] = useState<string | null>(null);
-
-  useErrorListener((error) => {
-    const message = error.message.toLowerCase();
-    if (message.includes("full")) setErrorCode("ROOM_FULL");
-    else if (message.includes("not found") || message.includes("does not exist")) setErrorCode("ROOM_NOT_FOUND");
-    else if (message.includes("configuration")) setErrorCode("SERVER_CONFIG_ERROR");
-  });
-
-  if (errorCode) return <RoomError code={errorCode} />;
-
   return (
     <main className="luxury-shell flex min-h-screen flex-col justify-between px-4 py-6 sm:px-8 sm:py-8">
       <ConstellationBackground />
@@ -105,6 +94,77 @@ function RoomContents({ roomId }: { roomId: string }) {
   );
 }
 
+function RoomSession({ roomId, name }: { roomId: string; name: string }) {
+  const [errorState, setErrorState] = useState<{ code: string; message?: string } | null>(null);
+
+  useErrorListener((error) => {
+    const rawMessage = error.message;
+    const message = rawMessage.toLowerCase();
+
+    if (
+      message.includes("room_not_found") ||
+      message.includes("not found") ||
+      message.includes("does not exist")
+    ) {
+      setErrorState({
+        code: "ROOM_NOT_FOUND",
+        message: "This room does not exist.",
+      });
+    } else if (
+      message.includes("room_full") ||
+      message.includes("full")
+    ) {
+      setErrorState({
+        code: "ROOM_FULL",
+        message: "This room is full. Write Me Live rooms support up to 2 people.",
+      });
+    } else if (
+      message.includes("invalid_room_id") ||
+      message.includes("invalid")
+    ) {
+      setErrorState({
+        code: "INVALID_ROOM_ID",
+        message: "This room link is not valid.",
+      });
+    } else if (
+      message.includes("server_config_error") ||
+      message.includes("configuration")
+    ) {
+      setErrorState({
+        code: "SERVER_CONFIG_ERROR",
+        message: "A server configuration error occurred.",
+      });
+    } else {
+      setErrorState({
+        code: "CONNECTION_ERROR",
+        message: rawMessage || "The realtime connection to this room was interrupted.",
+      });
+    }
+  });
+
+  if (errorState) {
+    return <RoomError code={errorState.code} roomId={roomId} message={errorState.message} />;
+  }
+
+  return (
+    <RoomProvider id={roomId} initialPresence={{ name }}>
+      <ClientSideSuspense
+        fallback={
+          <main className="luxury-shell flex min-h-screen items-center justify-center px-4">
+            <ConstellationBackground />
+            <div className="glass-card relative z-10 flex max-w-md items-center justify-center gap-3 rounded-2xl p-8 text-sm text-[var(--text-secondary)] shadow-2xl">
+              <span className="loading-orbit" />
+              <span className="font-medium">Connecting to live room…</span>
+            </div>
+          </main>
+        }
+      >
+        <RoomContents roomId={roomId} />
+      </ClientSideSuspense>
+    </RoomProvider>
+  );
+}
+
 export default function RoomClient({
   roomId,
   initialName,
@@ -128,21 +188,7 @@ export default function RoomClient({
 
   return (
     <LiveblocksProvider>
-      <RoomProvider id={roomId} initialPresence={{ name }}>
-        <ClientSideSuspense
-          fallback={
-            <main className="luxury-shell flex min-h-screen items-center justify-center px-4">
-              <ConstellationBackground />
-              <div className="glass-card relative z-10 flex max-w-md items-center justify-center gap-3 rounded-2xl p-8 text-sm text-[var(--text-secondary)] shadow-2xl">
-                <span className="loading-orbit" />
-                <span className="font-medium">Connecting to live room…</span>
-              </div>
-            </main>
-          }
-        >
-          <RoomContents roomId={roomId} />
-        </ClientSideSuspense>
-      </RoomProvider>
+      <RoomSession roomId={roomId} name={name} />
     </LiveblocksProvider>
   );
 }

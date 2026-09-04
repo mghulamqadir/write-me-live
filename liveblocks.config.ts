@@ -16,13 +16,34 @@ declare global {
 
 export const liveblocksClient = createClient({
   authEndpoint: async (room) => {
-    const theme = document.documentElement.dataset.theme;
-    const response = await fetch("/api/liveblocks-auth", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "x-wml-theme": isThemeName(theme) ? theme : "dark" },
-      body: JSON.stringify({ room }),
-    });
-    return response.json();
+    const theme = typeof document !== "undefined" ? document.documentElement.dataset.theme : undefined;
+    try {
+      const response = await fetch("/api/liveblocks-auth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-wml-theme": isThemeName(theme) ? theme : "dark" },
+        body: JSON.stringify({ room }),
+      });
+
+      if (!response.ok) {
+        let errData: { code?: string; message?: string } = {};
+        try {
+          errData = await response.json();
+        } catch {
+          // Fallback if not JSON
+        }
+        return {
+          error: "forbidden",
+          reason: `${errData.code ?? "AUTH_FAILED"}: ${errData.message ?? response.statusText}`,
+        };
+      }
+
+      return response.json();
+    } catch (err) {
+      return {
+        error: "forbidden",
+        reason: err instanceof Error ? err.message : "Failed to connect to authentication service",
+      };
+    }
   },
 });
 
